@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 from ttkbootstrap import Style
@@ -28,12 +22,12 @@ def check_winner():
     
     for combination in winning_combinations:
         if combination[0] == combination[1] == combination[2] != '':
-            declare_winner(combination[0])
+            show_result(combination[0])
     
     if all(game[i][j] != '' for i in range(3) for j in range(3)):
-        declare_winner("Draw")
+        show_result("Draw")
 
-def declare_winner(player):
+def show_result(player):
     if player == "Draw":
         message = "It's a draw!"
     else:
@@ -72,9 +66,6 @@ game = [['', '', ''] for _ in range(3)]
 current_player = "X"
 
 root.mainloop()
-
-
-# In[ ]:
 
 
 
