@@ -19,7 +19,7 @@ clock = pygame.time.Clock()
 
 font = pygame.font.Font(None, 36)
 
-def generaterandompattern(num):
+def generate_random_pattern(num):
     return set([(random.randrange(0, GRID_HEIGHT), random.randrange(0, GRID_WIDTH)) for _ in range(num)])
 
 def draw_grid(positions):
@@ -34,7 +34,7 @@ def draw_grid(positions):
     for col in range(GRID_WIDTH):
         pygame.draw.line(screen, GRAY, (col * SIZE, 0), (col * SIZE, HEIGHT))
 
-def updategeneration(positions):
+def update_generation(positions):
     all_neighbors = set()
     new_positions = set()
 
@@ -92,7 +92,7 @@ def main():
         
         if step >= update_freq:
             step = 0
-            positions = updategeneration(positions)
+            positions = update_generation(positions)
             generation_count += 1
 
         pygame.display.set_caption("Conway's Game of Life ON" if playing else "Conway's Game of Life Paused")
@@ -123,7 +123,7 @@ def main():
                     generation_count = 0
                 
                 if event.key == pygame.K_r:
-                    positions = generaterandompattern(random.randrange(2, 10) * GRID_WIDTH)
+                    positions = generate_random_pattern(random.randrange(2, 10) * GRID_WIDTH)
                     generation_count = 0
     
         screen.fill(BG_COLOR)
