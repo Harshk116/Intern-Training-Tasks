@@ -7,6 +7,8 @@ class BattleshipGame:
         self.root = root
         self.root.title("Place Your Ship - Battleship Game")
 
+        self.root.geometry("350x350")
+
         self.board_size = 6
         self.placing_ship = True
         self.ship_positions = []
@@ -20,7 +22,11 @@ class BattleshipGame:
 
         for i in range(self.board_size):
             for j in range(self.board_size):
-                self.buttons[i][j].grid(row=i, column=j)
+                self.buttons[i][j].grid(row=i, column=j, sticky="nsew")
+
+        for i in range(self.board_size):
+            self.root.grid_rowconfigure(i, weight=1)
+            self.root.grid_columnconfigure(i, weight=1)
 
     def button_click(self, x, y):
         if self.placing_ship:
@@ -32,30 +38,12 @@ class BattleshipGame:
         if len(self.ship_positions) == 0:
             self.ship_positions.append((x, y))
             self.buttons[x][y].config(bg='green')
-        elif len(self.ship_positions) == 1:
-            first_x, first_y = self.ship_positions[0]
-            if x == first_x:
-                if abs(y - first_y) == 1:
-                    self.ship_positions.append((x, y))
-                    self.buttons[x][y].config(bg='green')
-            elif y == first_y:
-                if abs(x - first_x) == 1:
-                    self.ship_positions.append((x, y))
-                    self.buttons[x][y].config(bg='green')
-        elif len(self.ship_positions) == 2:
-            first_x, first_y = self.ship_positions[0]
-            second_x, second_y = self.ship_positions[1]
-
-            if (x, y) not in self.ship_positions:
-                if first_x == second_x:
-                    if abs(y - second_y) == 1 or abs(y - first_y) == 1:
-                        self.ship_positions.append((x, y))
-                        self.buttons[x][y].config(bg='green')
-                elif first_y == second_y:
-                    if abs(x - second_x) == 1 or abs(x - first_x) == 1:
-                        self.ship_positions.append((x, y))
-                        self.buttons[x][y].config(bg='green')
-
+        elif len(self.ship_positions) < 3:
+            if self.valid_ship_position(x, y):
+                self.ship_positions.append((x, y))
+                self.buttons[x][y].config(bg='green')
+            else:
+                messagebox.showwarning("Invalid Placement", "Ship must be placed in a straight line.")
         if len(self.ship_positions) == 3:
             for x, y in self.ship_positions:
                 self.buttons[x][y].config(bg='blue')
@@ -63,6 +51,25 @@ class BattleshipGame:
             messagebox.showinfo("Ship Placed", "Your ship has been placed! Start the game.")
             self.placing_ship = False
             self.root.title("Battleship Game")
+
+    def valid_ship_position(self, x, y):
+        if (x, y) in self.ship_positions:
+            return False
+
+        existing_positions = self.ship_positions
+        first_x, first_y = existing_positions[0]
+
+        if len(existing_positions) == 1:
+            return (abs(x - first_x) == 1 and y == first_y) or (abs(y - first_y) == 1 and x == first_x)
+
+        if len(existing_positions) == 2:
+            second_x, second_y = existing_positions[1]
+            if first_x == second_x:
+                return x == first_x and (abs(y - first_y) == 1 or abs(y - second_y) == 1)
+            elif first_y == second_y:
+                return y == first_y and (abs(x - first_x) == 1 or abs(x - second_x) == 1)
+
+        return False
 
     def play_game(self, x, y):
         if (x, y) in self.ship_positions:
