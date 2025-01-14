@@ -6,17 +6,19 @@ class BattleshipGame:
     def __init__(self, root):
         self.root = root
         self.root.title("Place Your Ship - Battleship Game")
-
+        
         self.root.geometry("350x350")
 
         self.board_size = 6
         self.placing_ship = True
         self.ship_positions = []
-        self.create_board()
+        self.label = tk.Label(self.root, text="Place a 3-cell ship", font=("Arial", 12))
+        self.label.grid(row=self.board_size, column=0, columnspan=self.board_size)
+        self.battlefield()
 
-    def create_board(self):
+    def battlefield(self):
         self.buttons = [[tk.Button(self.root, width=4, height=2, bg='blue',
-                                   command=lambda x=i, y=j: self.button_click(x, y))
+                                   command=lambda x=i, y=j: self.select_ship(x, y))
                          for j in range(self.board_size)]
                         for i in range(self.board_size)]
 
@@ -28,7 +30,7 @@ class BattleshipGame:
             self.root.grid_rowconfigure(i, weight=1)
             self.root.grid_columnconfigure(i, weight=1)
 
-    def button_click(self, x, y):
+    def select_ship(self, x, y):
         if self.placing_ship:
             self.place_ship(x, y)
         else:
@@ -48,6 +50,7 @@ class BattleshipGame:
             for x, y in self.ship_positions:
                 self.buttons[x][y].config(bg='blue')
 
+            self.label.config(text="Ship placed! Start the game.")
             messagebox.showinfo("Ship Placed", "Your ship has been placed! Start the game.")
             self.placing_ship = False
             self.root.title("Battleship Game")
@@ -69,7 +72,7 @@ class BattleshipGame:
             elif first_y == second_y:
                 return y == first_y and (abs(x - first_x) == 1 or abs(x - second_x) == 1)
 
-        return False
+        return False   
 
     def play_game(self, x, y):
         if (x, y) in self.ship_positions:
@@ -77,17 +80,23 @@ class BattleshipGame:
             self.ship_positions.remove((x, y))
             if not self.ship_positions:
                 messagebox.showinfo("Congratulations!", "You sunk the ship!")
-                self.root.destroy()
+                self.reset_game()
         else:
             self.buttons[x][y].config(bg='white', state=tk.DISABLED)
-            messagebox.showinfo("Oops!", "Try again.")
 
+    def reset_game(self):
+        self.placing_ship = True
+        self.ship_positions = []
+        for i in range(self.board_size):
+            for j in range(self.board_size):
+                self.buttons[i][j].config(bg='blue', state=tk.NORMAL)
+        self.label.config(text="Place a 3-cell ship")
+        self.root.title("Place Your Ship - Battleship Game")
 
 def main():
     root = tk.Tk()
     game = BattleshipGame(root)
     root.mainloop()
-
 
 if __name__ == "__main__":
     main()
