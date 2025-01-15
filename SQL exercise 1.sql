@@ -146,3 +146,30 @@ ON
     sakila.inventory.film_id = sakila.film.film_id
 WHERE 
     sakila.film.title = 'Hunchback Impossible';
+-- Q5: Using the tables “payment” and “customer” and the JOIN command, list the total paid by each customer. List the customers alphabetically by last name.
+SELECT 
+    sakila.customer.first_name, 
+    sakila.customer.last_name, 
+    SUM(sakila.payment.amount) AS total_paid
+FROM 
+    sakila.customer
+JOIN 
+    sakila.payment 
+ON 
+    sakila.customer.customer_id = sakila.payment.customer_id
+GROUP BY 
+    sakila.customer.customer_id, sakila.customer.first_name, sakila.customer.last_name
+ORDER BY 
+    sakila.customer.last_name;
+
+--part 2 (world)
+
+-- Q1: Find all countries where the second-to-last letter of the name is 'd'.
+SELECT Code, Name, Continent, GNP
+FROM country
+WHERE SUBSTRING(REVERSE(Name), 2, 1) = 'd';
+-- Q2: Find the countries with the 2nd and 3rd highest GNP.
+SELECT Code, Name, Continent, GNP
+FROM country
+ORDER BY GNP DESC
+LIMIT 2 OFFSET 1;
