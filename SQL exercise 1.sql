@@ -51,3 +51,8 @@ LIMIT 5 OFFSET 15;
 SELECT COUNT(*) 
 AS total_rows 
 FROM world.city;
+-- Q4: Find the most populated city
+SELECT name, population 
+FROM world.city 
+ORDER BY population DESC 
+LIMIT 1;
