@@ -27,3 +27,8 @@ SELECT last_name
 FROM sakila.actor 
 GROUP BY last_name 
 HAVING COUNT(last_name) = 1;
+-- Q9: List the last names of actors, as well as how many actors have that last name
+SELECT last_name, COUNT(*) AS actor_count 
+FROM sakila.actor 
+GROUP BY last_name 
+ORDER BY actor_count DESC;
