@@ -65,3 +65,8 @@ LIMIT 1;
 SELECT name 
 FROM world.city 
 WHERE population BETWEEN 670000 AND 700000;
+-- Q7: Find the 10 most populated cities and display them in decreasing order
+SELECT name, population 
+FROM world.city 
+ORDER BY population DESC 
+LIMIT 10;
