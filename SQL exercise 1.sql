@@ -44,4 +44,10 @@ SELECT *
 FROM world.city 
 LIMIT 10;
 -- Q2: Display from row #16 to 20 with all columns
-SELECT * FROM world.city LIMIT 5 OFFSET 15;
+SELECT * 
+FROM world.city 
+LIMIT 5 OFFSET 15;
+-- Q3: How many rows are available in the table city
+SELECT COUNT(*) 
+AS total_rows 
+FROM world.city;
