@@ -79,3 +79,23 @@ LIMIT 10;
 SELECT district 
 FROM world.city 
 WHERE countrycode = 'USA' AND population > 3000000;
+
+--part 2 (Sakila)
+
+-- Q1: Which actor has appeared in the most films? (‘107', 'GINA', 'DEGENERES', '42')
+SELECT 
+    sakila.actor.actor_id, 
+    sakila.actor.first_name, 
+    sakila.actor.last_name, 
+    COUNT(*) AS film_count
+FROM 
+    sakila.actor
+JOIN 
+    sakila.film_actor 
+ON 
+    sakila.actor.actor_id = sakila.film_actor.actor_id
+GROUP BY 
+    sakila.actor.actor_id, sakila.actor.first_name, sakila.actor.last_name
+ORDER BY 
+    film_count DESC
+LIMIT 1;
