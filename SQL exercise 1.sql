@@ -43,3 +43,5 @@ JOIN sakila.address ON staff.address_id = address.address_id;
 SELECT * 
 FROM world.city 
 LIMIT 10;
+-- Q2: Display from row #16 to 20 with all columns
+SELECT * FROM world.city LIMIT 5 OFFSET 15;
