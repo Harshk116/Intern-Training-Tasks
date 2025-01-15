@@ -173,3 +173,20 @@ SELECT Code, Name, Continent, GNP
 FROM country
 ORDER BY GNP DESC
 LIMIT 2 OFFSET 1;
+
+--New Db Task
+
+CREATE DATABASE Corporate_Office;
+USE Corporate_Office;
+
+CREATE TABLE IF NOT EXISTS `departments` (
+  `DEPARTMENT_ID` decimal(4,0) NOT NULL DEFAULT '0',
+  `DEPARTMENT_NAME` varchar(30) NOT NULL,
+  `MANAGER_ID` decimal(6,0) DEFAULT NULL,
+  `LOCATION_ID` decimal(4,0) DEFAULT NULL,
+  PRIMARY KEY (`DEPARTMENT_ID`),
+  KEY `DEPT_MGR_FK` (`MANAGER_ID`),
+  KEY `DEPT_LOCATION_IX` (`LOCATION_ID`)
+);
+
+\
