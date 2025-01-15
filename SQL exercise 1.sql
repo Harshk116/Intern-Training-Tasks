@@ -70,3 +70,8 @@ SELECT name, population
 FROM world.city 
 ORDER BY population DESC 
 LIMIT 10;
+-- Q8: Order the data by city name and get the first 10 cities from the city table
+SELECT name 
+FROM world.city 
+ORDER BY name ASC 
+LIMIT 10;
