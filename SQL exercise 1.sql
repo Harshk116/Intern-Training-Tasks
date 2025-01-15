@@ -38,3 +38,8 @@ FROM sakila.staff
 JOIN sakila.address ON staff.address_id = address.address_id;
 
 --part 1 (World)
+
+-- Q1: Display all columns and 10 rows from the table “city”
+SELECT * 
+FROM world.city 
+LIMIT 10;
