@@ -116,3 +116,22 @@ ON
     sakila.film_category.film_id = sakila.film.film_id
 GROUP BY 
     sakila.category.category_id, sakila.category.name;
+
+-- Q3: Which film categories are long? (5 rows)
+SELECT 
+    sakila.category.name AS category, 
+    AVG(sakila.film.length) AS average_length
+FROM 
+    sakila.category
+JOIN 
+    sakila.film_category 
+ON 
+    sakila.category.category_id = sakila.film_category.category_id
+JOIN 
+    sakila.film 
+ON 
+    sakila.film_category.film_id = sakila.film.film_id
+GROUP BY 
+    sakila.category.category_id, sakila.category.name
+HAVING 
+    AVG(sakila.film.length) > 120;
