@@ -257,3 +257,30 @@ INSERT INTO `employees` (`EMPLOYEE_ID`, `FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PHO
 ('116', 'Shelli', 'Baida', 'SBAIDA', '515.127.4563', '1987-07-03', 'PU_CLERK', '2900.00', '0.00', '114', '30'), 
 ('117', 'Sigal', 'Tobias', 'STOBIAS', '515.127.4564', '1987-07-04', 'PU_CLERK', '2800.00', '0.00', '114', '30');
 
+-- Q1: Query to display Employee ID and First Name of employees whose department ID is 100 (using subquery).
+SELECT EMPLOYEE_ID, FIRST_NAME
+FROM employees e1
+WHERE e1.DEPARTMENT_ID = (
+    SELECT DEPARTMENT_ID
+    FROM employees e2
+    WHERE e2.DEPARTMENT_ID = 100
+    limit 1
+);
+-- Q2: Query to display department ID and maximum salary of departments where
+-- the maximum salary is greater than the average salary in the same department (using subquery).
+SELECT DEPARTMENT_ID, MAX(SALARY) AS MAX_SALARY
+FROM employees e1
+GROUP BY DEPARTMENT_ID
+HAVING MAX(SALARY) > (
+    SELECT AVG(SALARY)
+    FROM employees e2
+    WHERE e2.DEPARTMENT_ID = e1.DEPARTMENT_ID
+);
+-- Q3: Query to display department name and department ID of employees whose salary is less than 35000 (using subquery).
+SELECT department.DEPARTMENT_NAME, department.DEPARTMENT_ID
+FROM departments department
+WHERE department.DEPARTMENT_ID IN (
+    SELECT DISTINCT DEPARTMENT_ID
+    FROM employees
+    WHERE SALARY < 35000
+);
