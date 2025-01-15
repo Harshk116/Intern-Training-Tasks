@@ -135,3 +135,14 @@ GROUP BY
     sakila.category.category_id, sakila.category.name
 HAVING 
     AVG(sakila.film.length) > 120;
+-- Q4: How many copies of the film “Hunchback Impossible” exist in the inventory system? (6)
+SELECT 
+    COUNT(*) AS copies_count
+FROM 
+    sakila.inventory
+JOIN 
+    sakila.film 
+ON 
+    sakila.inventory.film_id = sakila.film.film_id
+WHERE 
+    sakila.film.title = 'Hunchback Impossible';
