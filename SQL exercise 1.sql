@@ -75,3 +75,7 @@ SELECT name
 FROM world.city 
 ORDER BY name ASC 
 LIMIT 10;
+-- Q9: Display all the districts of the USA where the population is greater than 3,000,000
+SELECT district 
+FROM world.city 
+WHERE countrycode = 'USA' AND population > 3000000;
