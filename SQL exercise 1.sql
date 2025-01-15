@@ -1,3 +1,5 @@
+--part 1 (Sakila)
+
 -- Q1: Display all tables available in the database “sakila”
 SHOW TABLES 
 FROM sakila;
@@ -16,3 +18,7 @@ WHERE last_name = 'Johansson';
 SELECT UPPER(CONCAT(first_name, ' ', last_name)) 
 AS 'Actor Name' 
 FROM sakila.actor;
+-- Q7: Find the ID number, first name, and last name of an actor, of whom you know only the first name, "Joe"
+SELECT actor_id, first_name, last_name 
+FROM sakila.actor 
+WHERE first_name = 'Joe';
