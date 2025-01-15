@@ -8,3 +8,5 @@ SHOW CREATE TABLE sakila.actor;
 -- Q4: Display the first and last names of all actors from the table actor
 SELECT first_name, last_name 
 FROM sakila.actor;
+-- Q5: Which actors have the last name ‘Johansson’
+SELECT * FROM sakila.actor WHERE last_name = 'Johansson';
