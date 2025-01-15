@@ -99,3 +99,20 @@ GROUP BY
 ORDER BY 
     film_count DESC
 LIMIT 1;
+
+-- Q2: What is the average length of films by category? (16 rows)
+SELECT 
+    sakila.category.name AS category, 
+    AVG(sakila.film.length) AS average_length
+FROM 
+    sakila.category
+JOIN 
+    sakila.film_category 
+ON 
+    sakila.category.category_id = sakila.film_category.category_id
+JOIN 
+    sakila.film 
+ON 
+    sakila.film_category.film_id = sakila.film.film_id
+GROUP BY 
+    sakila.category.category_id, sakila.category.name;
