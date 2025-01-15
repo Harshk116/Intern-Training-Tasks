@@ -22,3 +22,8 @@ FROM sakila.actor;
 SELECT actor_id, first_name, last_name 
 FROM sakila.actor 
 WHERE first_name = 'Joe';
+-- Q8: Which last names are not repeated
+SELECT last_name 
+FROM sakila.actor 
+GROUP BY last_name 
+HAVING COUNT(last_name) = 1;
