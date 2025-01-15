@@ -9,4 +9,10 @@ SHOW CREATE TABLE sakila.actor;
 SELECT first_name, last_name 
 FROM sakila.actor;
 -- Q5: Which actors have the last name ‘Johansson’
-SELECT * FROM sakila.actor WHERE last_name = 'Johansson';
+SELECT * 
+FROM sakila.actor 
+WHERE last_name = 'Johansson';
+-- Q6: Display the first and last name of each actor in a single column in upper case letters. Name the column Actor Name
+SELECT UPPER(CONCAT(first_name, ' ', last_name)) 
+AS 'Actor Name' 
+FROM sakila.actor;
