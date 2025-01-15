@@ -56,3 +56,8 @@ SELECT name, population
 FROM world.city 
 ORDER BY population DESC 
 LIMIT 1;
+-- Q5: Find the least populated city
+SELECT name, population 
+FROM world.city 
+ORDER BY population ASC 
+LIMIT 1;
