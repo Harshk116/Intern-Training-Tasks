@@ -79,7 +79,10 @@ LIMIT 10;
 SELECT district 
 FROM world.city 
 WHERE countrycode = 'USA' AND population > 3000000;
-
+-- Q10: What is the value of name and population in the rows with ID = 5, 23, 432, and 2021?
+SELECT name, population
+FROM world.city
+WHERE ID IN (5, 23, 432, 2021);
 --part 2 (Sakila)
 
 -- Q1: Which actor has appeared in the most films? (‘107', 'GINA', 'DEGENERES', '42')
