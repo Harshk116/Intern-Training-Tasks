@@ -96,3 +96,12 @@ FROM Track
 JOIN Album ON Track.AlbumId = Album.AlbumId
 JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId
 JOIN Genre ON Track.GenreId = Genre.GenreId;
+-- Q.8 Provide a query that shows the top 10 bestselling artists. (In terms of earning).
+SELECT Artist.Name AS ArtistName, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS TotalEarnings
+FROM InvoiceLine
+JOIN Track ON InvoiceLine.TrackId = Track.TrackId
+JOIN Album ON Track.AlbumId = Album.AlbumId
+JOIN Artist ON Album.ArtistId = Artist.ArtistId
+GROUP BY ArtistName
+ORDER BY TotalEarnings DESC
+LIMIT 10;
