@@ -1,3 +1,5 @@
+--Part 1
+
 -- Q1: What is the title of the album with AlbumId 67?
 SELECT Title 
 FROM Album 
@@ -49,3 +51,12 @@ SELECT EmployeeId, FirstName, LastName, Title
 FROM Employee 
 WHERE Title LIKE '%Sales%' 
   AND Title LIKE '%Agent%';
+
+--Part 2
+
+-- Q1: Display most used media types: their names and count in descending order.
+SELECT MediaType.Name, COUNT(Track.TrackId) AS TrackCount 
+FROM MediaType 
+JOIN Track ON MediaType.MediaTypeId = Track.MediaTypeId 
+GROUP BY MediaType.MediaTypeId 
+ORDER BY TrackCount DESC;  
