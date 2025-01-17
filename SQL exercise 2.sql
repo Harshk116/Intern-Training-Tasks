@@ -65,3 +65,12 @@ SELECT Customer.FirstName || ' ' || Customer.LastName AS FullName, Invoice.Invoi
 FROM Customer
 JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId
 WHERE Customer.Country = 'Brazil';
+-- Q.3 Display artist name and total track count of the top 10 rock bands from dataset.
+SELECT Artist.Name AS ArtistName, COUNT(Track.TrackId) AS TrackCount
+FROM Track
+JOIN Album ON Track.AlbumId = Album.AlbumId
+JOIN Artist ON Album.ArtistId = Artist.ArtistId
+WHERE Track.GenreId = (SELECT GenreId FROM Genre WHERE Name = 'Rock')
+GROUP BY ArtistName
+ORDER BY TrackCount DESC
+LIMIT 10;
