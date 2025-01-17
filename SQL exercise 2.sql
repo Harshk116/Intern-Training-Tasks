@@ -20,3 +20,9 @@ FROM Invoice
 GROUP BY BillingCity 
 ORDER BY TotalInvoice DESC 
 LIMIT 1;
+-- Q6: Produce a table that lists each country and the number of customers in that country, in descending order.
+SELECT Country, COUNT(CustomerId) AS CustomerCount 
+FROM Customer 
+GROUP BY Country 
+HAVING CustomerCount > 0 
+ORDER BY CustomerCount DESC;
