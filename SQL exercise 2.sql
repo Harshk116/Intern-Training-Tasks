@@ -91,6 +91,7 @@ FROM PlaylistTrack
 JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId
 GROUP BY PlaylistName
 ORDER BY TrackCount DESC;
+-- Q.7 Provide a query that shows all the Tracks, but displays no IDs.The result should include the Album name, Media type, and Genre.
 SELECT Album.Title AS AlbumName, MediaType.Name AS MediaTypeName, Genre.Name AS GenreName
 FROM Track
 JOIN Album ON Track.AlbumId = Album.AlbumId
@@ -105,3 +106,11 @@ JOIN Artist ON Album.ArtistId = Artist.ArtistId
 GROUP BY ArtistName
 ORDER BY TotalEarnings DESC
 LIMIT 10;
+-- Q.9 Provide a query that shows the most purchased Media Type.
+SELECT MediaType.Name AS MediaTypeName, COUNT(InvoiceLine.TrackId) AS TotalPurchases
+FROM InvoiceLine
+JOIN Track ON InvoiceLine.TrackId = Track.TrackId
+JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId
+GROUP BY MediaTypeName
+ORDER BY TotalPurchases DESC
+LIMIT 1;
