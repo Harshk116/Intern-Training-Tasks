@@ -44,3 +44,8 @@ SELECT strftime('%Y', InvoiceDate) AS Year, COUNT(InvoiceId) AS InvoiceCount
 FROM Invoice 
 WHERE Year IN ('2009', '2011') 
 GROUP BY Year;
+-- Q10: Provide a query showing only the Employees who are Sales Agents using LIKE.
+SELECT EmployeeId, FirstName, LastName, Title 
+FROM Employee 
+WHERE Title LIKE '%Sales%' 
+  AND Title LIKE '%Agent%';
