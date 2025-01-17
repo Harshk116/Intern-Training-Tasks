@@ -6,3 +6,8 @@ WHERE AlbumId = 67;
 SELECT Name, Milliseconds / 1000 AS LengthInSeconds 
 FROM Track 
 WHERE Milliseconds / 1000 BETWEEN 50 AND 70;
+-- Q3: List all the albums by artists with the word ‘black’ in their name.
+SELECT Album.Title
+FROM Album 
+JOIN Artist ON Album.ArtistId = Artist.ArtistId 
+WHERE Artist.Name LIKE '%black%';
