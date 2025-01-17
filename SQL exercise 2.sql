@@ -74,3 +74,10 @@ WHERE Track.GenreId = (SELECT GenreId FROM Genre WHERE Name = 'Rock')
 GROUP BY ArtistName
 ORDER BY TrackCount DESC
 LIMIT 10;
+-- Q.4 Display the Best customer (in terms of amount spent). Full name (first name and last name).
+SELECT Customer.FirstName || ' ' || Customer.LastName AS FullName
+FROM Customer
+JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId
+GROUP BY FullName
+ORDER BY SUM(Invoice.Total) DESC
+LIMIT 1;
