@@ -85,3 +85,9 @@ LIMIT 1;
 SELECT Customer.FirstName || ' ' || Customer.LastName AS FullName, Customer.CustomerId, Customer.Country
 FROM Customer
 WHERE Customer.Country != 'USA';
+-- Q.6 Provide a query that shows the total number of tracks in each playlist in descending order.The Playlist name should be included in the resultant table.
+SELECT Playlist.Name AS PlaylistName, COUNT(PlaylistTrack.TrackId) AS TrackCount
+FROM PlaylistTrack
+JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId
+GROUP BY PlaylistName
+ORDER BY TrackCount DESC;
