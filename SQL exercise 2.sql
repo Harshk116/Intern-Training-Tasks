@@ -33,3 +33,9 @@ JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId
 GROUP BY Customer.CustomerId 
 ORDER BY TotalSales DESC 
 LIMIT 5;
+-- Q8: Find the state-wise count of CustomerId and list the names of states with the count in decreasing order. Exclude rows where the state is NULL.
+SELECT State, COUNT(CustomerId) AS CustomerCount 
+FROM Customer 
+WHERE State IS NOT NULL 
+GROUP BY State 
+ORDER BY CustomerCount DESC;
