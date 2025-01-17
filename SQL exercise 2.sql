@@ -91,3 +91,8 @@ FROM PlaylistTrack
 JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId
 GROUP BY PlaylistName
 ORDER BY TrackCount DESC;
+SELECT Album.Title AS AlbumName, MediaType.Name AS MediaTypeName, Genre.Name AS GenreName
+FROM Track
+JOIN Album ON Track.AlbumId = Album.AlbumId
+JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId
+JOIN Genre ON Track.GenreId = Genre.GenreId;
