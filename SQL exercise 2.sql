@@ -26,3 +26,10 @@ FROM Customer
 GROUP BY Country 
 HAVING CustomerCount > 0 
 ORDER BY CustomerCount DESC;
+-- Q7: Find the top five customers in terms of sales (total combined invoice amounts). Include their name, CustomerId, and total invoice amount.
+SELECT Customer.CustomerId, Customer.FirstName || ' ' || Customer.LastName AS CustomerName, SUM(Invoice.Total) AS TotalSales 
+FROM Customer 
+JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId 
+GROUP BY Customer.CustomerId 
+ORDER BY TotalSales DESC 
+LIMIT 5;
