@@ -14,3 +14,9 @@ WHERE Artist.Name LIKE '%black%';
 -- Q4: Provide a query showing a unique/distinct list of billing countries from the Invoice table.
 SELECT DISTINCT BillingCountry 
 FROM Invoice;
+-- Q5: Display the city with the highest sum total invoice.
+SELECT BillingCity, SUM(Total) AS TotalInvoice 
+FROM Invoice 
+GROUP BY BillingCity 
+ORDER BY TotalInvoice DESC 
+LIMIT 1;
