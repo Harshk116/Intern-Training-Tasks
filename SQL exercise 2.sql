@@ -39,3 +39,8 @@ FROM Customer
 WHERE State IS NOT NULL 
 GROUP BY State 
 ORDER BY CustomerCount DESC;
+-- Q9: How many invoices were there in 2009 and 2011?
+SELECT strftime('%Y', InvoiceDate) AS Year, COUNT(InvoiceId) AS InvoiceCount 
+FROM Invoice 
+WHERE Year IN ('2009', '2011') 
+GROUP BY Year;
