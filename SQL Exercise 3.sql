@@ -60,3 +60,20 @@ JOIN product p ON oi.product_id = p.product_id
 JOIN product_class pc ON p.product_class_code = pc.product_class_code
 WHERE NOT a.pincode LIKE '%0%'
 ORDER BY customer_name, subtotal;
+-- 5. Write a Query to display product id,product description,totalquantity(sum(product quantity) for an item which has been bought maximum no. of times (Quantity Wise) along with product id 201. (USE SUB-QUERY) (1 ROW) [NOTE: ORDER_ITEMS TABLE, PRODUCT TABLE]
+SELECT 
+    p.product_id, 
+    p.product_desc, 
+    SUM(oi.product_quantity) AS total_quantity
+FROM product p
+JOIN order_items oi ON p.product_id = oi.product_id
+WHERE p.product_id = 201
+   OR p.product_id = (
+       SELECT product_id 
+       FROM order_items 
+       GROUP BY product_id 
+       ORDER BY SUM(product_quantity) DESC 
+       LIMIT 1
+   )
+GROUP BY p.product_id, p.product_desc
+ORDER BY total_quantity DESC;
