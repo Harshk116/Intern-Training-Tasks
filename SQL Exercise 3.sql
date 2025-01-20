@@ -33,3 +33,12 @@ SELECT
     END AS inventory_status
 FROM product p
 JOIN product_class pc ON p.product_class_code = pc.product_class_code;
+-- 3. Show the count of cities in all countries other than USA and Malaysia with more than 1 city, in descending order of cities.
+SELECT 
+    country, 
+    COUNT(city) AS city_count
+FROM address
+WHERE country NOT IN ('USA', 'MALAYSIA')
+GROUP BY country
+HAVING COUNT(city) > 1
+ORDER BY city_count DESC;
