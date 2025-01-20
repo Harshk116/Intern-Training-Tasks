@@ -42,3 +42,21 @@ WHERE country NOT IN ('USA', 'MALAYSIA')
 GROUP BY country
 HAVING COUNT(city) > 1
 ORDER BY city_count DESC;
+-- 4. Write a query to display the customer_id,customer full name ,city,pincode,and order details (order id, product class desc, product desc, subtotal(product_quantity * product_price)) for orders shipped to cities whose pin codes do not have any 0s in them. Sort the output on customer name and subtotal. (52 ROWS) [NOTE: TABLE TO BE USED - online_customer, address, order_header, order_items, product, product_class]
+SELECT 
+    c.customer_id,
+    CONCAT(c.customer_fname, ' ', c.customer_lname) AS customer_name,
+    a.city,
+    a.pincode,
+    oh.order_id,
+    pc.product_class_desc,
+    p.product_desc,
+    (oi.product_quantity * p.product_price) AS subtotal
+FROM online_customer c
+JOIN address a ON c.address_id = a.address_id
+JOIN order_header oh ON c.customer_id = oh.customer_id
+JOIN order_items oi ON oh.order_id = oi.order_id
+JOIN product p ON oi.product_id = p.product_id
+JOIN product_class pc ON p.product_class_code = pc.product_class_code
+WHERE NOT a.pincode LIKE '%0%'
+ORDER BY customer_name, subtotal;
