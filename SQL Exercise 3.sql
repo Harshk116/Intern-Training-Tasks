@@ -77,3 +77,18 @@ WHERE p.product_id = 201
    )
 GROUP BY p.product_id, p.product_desc
 ORDER BY total_quantity DESC;
+-- 7. Write a query to display carton id, (len*width*height) as carton_vol and identify the optimum carton (carton with the least volume whose volume is greater than the total volume of all items (len * width * height * product_quantity)) for a given order whose order id is 10006, Assume all items of an order are packed into one single carton (box). (1 ROW) [NOTE: CARTON TABLE]
+SELECT 
+    c.carton_id,
+    (c.len * c.width * c.height) AS carton_volume
+FROM carton c
+JOIN (
+    SELECT 
+        SUM(p.len * p.width * p.height * oi.product_quantity) AS total_volume
+    FROM order_items oi
+    JOIN product p ON oi.product_id = p.product_id
+    WHERE oi.order_id = 10006
+) AS total_item_volume
+ON (c.len * c.width * c.height) > total_item_volume.total_volume
+ORDER BY carton_volume ASC
+LIMIT 1;
