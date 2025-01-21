@@ -92,3 +92,14 @@ JOIN (
 ON (c.len * c.width * c.height) > total_item_volume.total_volume
 ORDER BY carton_volume ASC
 LIMIT 1;
+-- 8. Write a query to display details (customer id,customer fullname,order id,product quantity) of customers who bought more than ten (i.e. total order qty) products per shipped order. (11 ROWS) [NOTE: TABLES TO BE USED - online_customer, order_header, order_items,]
+SELECT 
+    c.customer_id,
+    CONCAT(c.customer_fname, ' ', c.customer_lname) AS customer_name,
+    oh.order_id,
+    SUM(oi.product_quantity) AS total_quantity
+FROM online_customer c
+JOIN order_header oh ON c.customer_id = oh.customer_id
+JOIN order_items oi ON oh.order_id = oi.order_id
+GROUP BY c.customer_id, c.customer_fname, c.customer_lname, oh.order_id
+HAVING SUM(oi.product_quantity) > 10;
