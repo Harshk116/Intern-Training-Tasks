@@ -114,3 +114,18 @@ JOIN online_customer c ON oh.customer_id = c.customer_id
 JOIN order_items oi ON oh.order_id = oi.order_id
 WHERE oh.order_id > 10060
 GROUP BY oh.order_id, c.customer_id, c.customer_fname, c.customer_lname;
+-- 10. Write a query to display product class description ,total quantity (sum(product_quantity),Total value (product_quantity * product price) and show which class of products have been shipped highest(Quantity) to countries outside India other than USA? Also show the total value of those items. (1 ROWS)[NOTE:PRODUCT TABLE,ADDRESS TABLE,ONLINE_CUSTOMER TABLE,ORDER_HEADER TABLE,ORDER_ITEMS TABLE,PRODUCT_CLASS TABLE]
+SELECT 
+    pc.product_class_desc,
+    SUM(oi.product_quantity) AS total_quantity,
+    SUM(oi.product_quantity * p.product_price) AS total_value
+FROM product_class pc
+JOIN product p ON pc.product_class_code = p.product_class_code
+JOIN order_items oi ON p.product_id = oi.product_id
+JOIN order_header oh ON oi.order_id = oh.order_id
+JOIN online_customer oc ON oh.customer_id = oc.customer_id
+JOIN address a ON oc.address_id = a.address_id
+WHERE a.country NOT IN ('India', 'USA')
+GROUP BY pc.product_class_desc
+ORDER BY total_quantity DESC
+LIMIT 1;
