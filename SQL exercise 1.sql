@@ -279,6 +279,25 @@ HAVING MAX(SALARY) > (
     FROM employees e2
     WHERE e2.DEPARTMENT_ID = e1.DEPARTMENT_ID
 );
+-- OR
+SELECT 
+    EMPLOYEE_ID, 
+    FIRST_NAME, 
+    LAST_NAME, 
+    DEPARTMENT_ID, 
+    SALARY
+FROM 
+    employees e
+WHERE 
+    SALARY > (
+        SELECT AVG(SALARY) 
+        FROM employees 
+        WHERE DEPARTMENT_ID = e.DEPARTMENT_ID
+    )
+ORDER BY 
+    DEPARTMENT_ID, 
+    SALARY DESC;
+
 -- Q3: Query to display department name and department ID of employees whose salary is less than 35000 (using subquery).
 SELECT department.DEPARTMENT_NAME, department.DEPARTMENT_ID
 FROM departments department
@@ -287,3 +306,19 @@ WHERE department.DEPARTMENT_ID IN (
     FROM employees
     WHERE SALARY < 35000
 );
+
+-- OR
+
+SELECT 
+    e.EMPLOYEE_ID,
+    e.FIRST_NAME,
+    e.LAST_NAME,
+    e.DEPARTMENT_ID,
+    e.SALARY,
+    d.DEPARTMENT_NAME
+FROM 
+    employees e
+JOIN 
+    departments d ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+WHERE 
+    e.SALARY < 3500;
