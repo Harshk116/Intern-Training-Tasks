@@ -58,7 +58,7 @@ JOIN order_header oh ON c.customer_id = oh.customer_id
 JOIN order_items oi ON oh.order_id = oi.order_id
 JOIN product p ON oi.product_id = p.product_id
 JOIN product_class pc ON p.product_class_code = pc.product_class_code
-WHERE NOT a.pincode LIKE '%0%'
+WHERE NOT a.pincode LIKE '%0%' AND oh.ORDER_STATUS = 'Shipped'
 ORDER BY customer_name, subtotal;
 -- 5. Write a Query to display product id,product description,totalquantity(sum(product quantity) for an item which has been bought maximum no. of times (Quantity Wise) along with product id 201. (USE SUB-QUERY) (1 ROW) [NOTE: ORDER_ITEMS TABLE, PRODUCT TABLE]
 SELECT 
@@ -100,7 +100,7 @@ SELECT
 FROM online_customer c
 JOIN order_header oh ON c.customer_id = oh.customer_id
 JOIN order_items oi ON oh.order_id = oi.order_id
-Where oh.ORDER_STATUS = 'Shipped'
+WHERE oh.ORDER_STATUS = 'Shipped'
 GROUP BY c.customer_id, c.customer_fname, c.customer_lname, oh.order_id
 HAVING SUM(oi.product_quantity) > 10 ;
 -- 9. Write a query to display the order_id, customer id and customer full name of customers along with (product_quantity) as total quantity of products shipped for order ids > 10060. (6 ROWS) [NOTE: TABLES TO BE USED - online_customer, order_header, order_items]
@@ -112,7 +112,7 @@ SELECT
 FROM order_header oh
 JOIN online_customer c ON oh.customer_id = c.customer_id
 JOIN order_items oi ON oh.order_id = oi.order_id
-WHERE oh.order_id > 10060
+WHERE oh.ORDER_STATUS = 'Shipped' AND oh.order_id > 10060
 GROUP BY oh.order_id, c.customer_id, c.customer_fname, c.customer_lname;
 -- 10. Write a query to display product class description ,total quantity (sum(product_quantity),Total value (product_quantity * product price) and show which class of products have been shipped highest(Quantity) to countries outside India other than USA? Also show the total value of those items. (1 ROWS)[NOTE:PRODUCT TABLE,ADDRESS TABLE,ONLINE_CUSTOMER TABLE,ORDER_HEADER TABLE,ORDER_ITEMS TABLE,PRODUCT_CLASS TABLE]
 SELECT 
