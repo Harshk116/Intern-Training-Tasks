@@ -76,6 +76,47 @@ GROUP BY p.product_id, p.product_desc
 ORDER BY total_quantity DESC
 LIMIT 1;
 GROUP BY p.product_id, p.product_desc;
+
+-- OR
+
+WITH ProductQuantities AS (
+    SELECT 
+        p.product_id, 
+        p.product_desc, 
+        SUM(oi.product_quantity) AS total_quantity
+    FROM product p
+    JOIN order_items oi ON p.product_id = oi.product_id
+    WHERE oi.order_id IN (
+        SELECT order_id
+        FROM order_items
+        WHERE product_id = 201
+    )
+    GROUP BY p.product_id, p.product_desc
+),
+HighestQuantity AS (
+    SELECT MAX(total_quantity) AS max_total_quantity
+    FROM ProductQuantities
+)
+SELECT 
+    pq.product_id, 
+    pq.product_desc, 
+    pq.total_quantity
+FROM ProductQuantities pq
+JOIN HighestQuantity hq ON pq.total_quantity = hq.max_total_quantity;
+
+-- 6.Write a query to display the customer_id,customer name, email and order details (order id, product desc,product qty, subtotal(product_quantity * product_price)) for all customers even if they have not ordered any item.(225 ROWS) [NOTE: TABLE TO BE USED - online_customer, order_header, order_items, product]
+SELECT 
+    c.customer_id,
+    CONCAT(c.customer_fname, ' ', c.customer_lname) AS customer_name,
+    c.customer_email,
+    oh.order_id,
+    p.product_desc,
+    oi.product_quantity,
+    (oi.product_quantity * p.product_price) AS subtotal
+FROM online_customer c
+LEFT JOIN order_header oh ON c.customer_id = oh.customer_id
+LEFT JOIN order_items oi ON oh.order_id = oi.order_id
+LEFT JOIN product p ON oi.product_id = p.product_id;
 -- 7. Write a query to display carton id, (len*width*height) as carton_vol and identify the optimum carton (carton with the least volume whose volume is greater than the total volume of all items (len * width * height * product_quantity)) for a given order whose order id is 10006, Assume all items of an order are packed into one single carton (box). (1 ROW) [NOTE: CARTON TABLE]
 SELECT 
     c.carton_id,
@@ -149,3 +190,30 @@ WHERE a.country NOT IN ('India', 'USA')
 GROUP BY pc.product_class_desc
 ORDER BY total_quantity DESC
 LIMIT 1;
+
+ -- OR
+ 
+WITH ProductClassQuantities AS (
+    SELECT 
+        pc.product_class_desc,
+        SUM(oi.product_quantity) AS total_quantity,
+        SUM(oi.product_quantity * p.product_price) AS total_value
+    FROM product_class pc
+    JOIN product p ON pc.product_class_code = p.product_class_code
+    JOIN order_items oi ON p.product_id = oi.product_id
+    JOIN order_header oh ON oi.order_id = oh.order_id
+    JOIN online_customer oc ON oh.customer_id = oc.customer_id
+    JOIN address a ON oc.address_id = a.address_id
+    WHERE a.country NOT IN ('India', 'USA')
+    GROUP BY pc.product_class_desc
+),
+HighestQuantity AS (
+    SELECT MAX(total_quantity) AS max_total_quantity
+    FROM ProductClassQuantities
+)
+SELECT 
+    pcq.product_class_desc,
+    pcq.total_quantity,
+    pcq.total_value
+FROM ProductClassQuantities pcq
+JOIN HighestQuantity hq ON pcq.total_quantity = hq.max_total_quantity;
